@@ -5,16 +5,20 @@
         </head>
         <header>
             <div class="logo">LIBRERIA NTT</div>
-            <button class="menu-button">Buscar</button>
+            <button class="menu-button" (click)="buscar()">Buscar</button>
             <button class="menu-button">Crear Libro</button>
         </header>
     </div>
-    <div class="contenedor-principal" *ngIf="">
+    <div fxLayout="row" class="contenedor-principal" *ngIf="search">
         <p class="input-label">
-            Busqueda
-            <input [ngModel]="searchTerm" (ngModelChange)="onSearchTermChange($event)" />
-        </p>
-        <div class="list" ng>
+            <input class="espaciado" [ngModel]="searchTerm" (ngModelChange)="onSearchTermChange($event)" />
+            <select class="espaciado" [(ngModel)]="selectedGenre">
+                <option value="">All Genres</option>
+                <option *ngFor="let genre of genres" [value]="genre">{{genre}}</option>
+            </select>
+            <button class="espaciado" (click)="searchBooksByGenre()">Buscar</button>
+        </p>  
+        <div class="list">
             <app-book *ngFor="let book of books" [book]="book"></app-book>
         </div>
     </div>

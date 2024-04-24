@@ -15,6 +15,22 @@ export class AppComponent implements OnInit {
   private startIndex: number = 0;
   private searchTermChanged = new Subject<void>();
 
+  //Dejo los generos en ingles ya que google no los detecta en español!!!!
+  genres: string[] = [
+    'Fiction',
+    'Mystery',
+    'Romance',
+    'Science Fiction',
+    'Fantasy',
+    'Adventure',
+    'Horror',
+    'Thriller',
+    'Biography',
+    'Humor'
+  ];
+  selectedGenre: string = '';
+  search : boolean = false;
+
   @HostListener("window:scroll", ["$event"])
   onEvent() {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
@@ -45,5 +61,19 @@ export class AppComponent implements OnInit {
     this.startIndex = 0;
     this.searchTerm = searchTerm;
     this.searchTermChanged.next();
+  }
+
+  searchBooksByGenre() {
+    if (this.selectedGenre) {
+      this.appService.getBooksByGenre(this.selectedGenre)
+      
+      .subscribe((response: any) => {
+        this.books = response.items;
+      });
+    }
+  }
+
+  buscar(){
+    this.search = true;
   }
 }
