@@ -1,0 +1,13 @@
+<div class="book">
+	<img *ngIf="book.volumeInfo.imageLinks; else no_img"
+  class="image"
+  [src]="book.volumeInfo.imageLinks.thumbnail"/>
+	<h5 class="header">{{ book.volumeInfo.title }}</h5>
+	<p class="description">{{ book.volumeInfo.description }}</p>
+</div>
+
+<ng-template #no_img>
+	<span class="material-icons no-img">
+    crop_original
+  </span>
+</ng-template>

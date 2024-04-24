@@ -1,0 +1,32 @@
+.book {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 5vh 0 5vh;
+    align-items: center;
+    border: 1px solid;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #fffff4;
+    width: 225px;
+    height: 300px;
+  }
+  
+  .image {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+  }
+  
+  .header, .description {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin: 10px;
+  }
+  
+  .no-img {
+    font-family: "Material Icons" !important;
+    font-size: 200px;
+  }
+  
