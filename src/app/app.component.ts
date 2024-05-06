@@ -3,6 +3,7 @@ import { Subject } from "rxjs";
 import { debounceTime, filter, switchMap } from "rxjs/operators";
 import { AppService } from "./app.service";
 import { Book } from "./book";
+import { HttpParams } from "@angular/common/http";
 
 @Component({
   selector: "my-app",
@@ -14,6 +15,9 @@ export class AppComponent implements OnInit {
   searchTerm: string = "";
   private startIndex: number = 0;
   private searchTermChanged = new Subject<void>();
+  showAdvancedFilters: boolean = false;
+  startDate: string = '';
+  endDate: string = '';
 
   //Dejo los generos en ingles ya que google no los detecta en español!!!!
   genres: string[] = [
@@ -55,6 +59,37 @@ export class AppComponent implements OnInit {
       .subscribe((response: any) => {
         this.books = response.items;
       });
+  }
+
+  toggleAdvancedFilters() {
+    this.showAdvancedFilters = !this.showAdvancedFilters;
+  }
+
+  applyAdvancedFilters() {
+    if (this.showAdvancedFilters) {
+      let paramsString = '';
+      
+      if (this.selectedGenre) {
+        paramsString += `subject:${this.selectedGenre}+`;
+      }
+      
+      if (this.startDate) {
+        paramsString += `after:${this.startDate}+`;
+      }
+      
+      if (this.endDate) {
+        paramsString += `before:${this.endDate}+`;
+      }
+  
+      if (paramsString !== '') {
+        paramsString = 'q=' + paramsString + '&maxResults=20';
+        
+        this.appService.getBooks(paramsString)
+        .subscribe((response: any) => {
+          this.books = response.items;
+        });
+      }
+    }
   }
 
   public onSearchTermChange(searchTerm: string) {

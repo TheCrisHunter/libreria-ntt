@@ -32,4 +32,28 @@ export class AppService {
     });
     return this.http.get<any[]>(this.booksUrl, { params });
   }
+
+  public getBooksAdvanced(filters: any, startIndex?: number) {
+    let paramsString = '';
+
+    if (filters.genre) {
+      paramsString += `subject:${filters.genre}+`;
+    }
+
+    if (filters.startDate) {
+      paramsString += `after:${filters.startDate}+`;
+    }
+
+    if (filters.endDate) {
+      paramsString += `before:${filters.endDate}+`;
+    }
+
+    if (startIndex) {
+      paramsString += `&startIndex=${startIndex}`;
+    }
+
+    const params = new HttpParams({ fromString: 'q=' + paramsString });
+    
+    return this.http.get<any[]>(this.booksUrl, { params });
+  }
 }

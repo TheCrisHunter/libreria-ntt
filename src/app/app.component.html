@@ -10,14 +10,18 @@
         </header>
     </div>
     <div fxLayout="row" class="contenedor-principal" *ngIf="search">
-        <p class="input-label">
+        <div class="input-label">
             <input class="espaciado" [ngModel]="searchTerm" (ngModelChange)="onSearchTermChange($event)" />
-            <select class="espaciado" [(ngModel)]="selectedGenre">
-                <option value="">All Genres</option>
-                <option *ngFor="let genre of genres" [value]="genre">{{genre}}</option>
-            </select>
-            <button class="espaciado" (click)="searchBooksByGenre()">Buscar</button>
-        </p>  
+            <button (click)="toggleAdvancedFilters()">Filtros avanzados</button>
+            <div *ngIf="showAdvancedFilters" class="advanced-filters">
+                <select [(ngModel)]="selectedGenre">
+                  <option value="">All Genres</option>
+                  <option *ngFor="let genre of genres" [value]="genre">{{genre}}</option>
+                </select>
+                <input type="date" [(ngModel)]="startDate"> - <input type="date" [(ngModel)]="endDate">
+                <button (click)="applyAdvancedFilters()">Aplicar</button>
+            </div>
+        </div>  
         <div class="list">
             <app-book *ngFor="let book of books" [book]="book"></app-book>
         </div>
